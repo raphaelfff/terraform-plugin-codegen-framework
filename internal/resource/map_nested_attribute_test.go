@@ -20,7 +20,7 @@ import (
 func TestGeneratorMapNestedAttribute_New(t *testing.T) {
 	t.Parallel()
 
-	attributes, err := NewAttributes(resource.Attributes{})
+	attributes, err := NewAttributes(resource.Attributes{}, name)
 
 	if err != nil {
 		t.Error(err)

@@ -31,7 +31,7 @@ func NewGeneratorSingleNestedAttribute(name string, a *provider.SingleNestedAttr
 		return GeneratorSingleNestedAttribute{}, fmt.Errorf("*provider.SingleNestedAttribute is nil")
 	}
 
-	attributes, err := NewAttributes(a.Attributes)
+	attributes, err := NewAttributes(name, a.Attributes)
 
 	if err != nil {
 		return GeneratorSingleNestedAttribute{}, err
@@ -188,7 +188,7 @@ func (g GeneratorSingleNestedAttribute) CustomTypeAndValue(name string) ([]byte,
 		return nil, err
 	}
 
-	attributeAttrTypes, err := g.Attributes.AttrTypes()
+	attributeAttrTypes, err := g.Attributes.AttrTypes(name)
 
 	if err != nil {
 		return nil, err
@@ -216,7 +216,7 @@ func (g GeneratorSingleNestedAttribute) CustomTypeAndValue(name string) ([]byte,
 	// CustomTypeAndValue interface (i.e, nested attributes).
 	for _, k := range attributeKeys {
 		if c, ok := g.Attributes[k].(schema.CustomTypeAndValue); ok {
-			b, err := c.CustomTypeAndValue(k)
+			b, err := c.CustomTypeAndValue(name + "_" + k)
 
 			if err != nil {
 				return nil, err

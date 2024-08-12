@@ -55,13 +55,13 @@ func (g GeneratorAttributes) AttributeTypes() (map[string]string, error) {
 
 // AttrTypes returns a mapping of attribute names to string representations of the
 // underlying attr.Type.
-func (g GeneratorAttributes) AttrTypes() (map[string]string, error) {
+func (g GeneratorAttributes) AttrTypes(name string) (map[string]string, error) {
 	attributeKeys := g.SortedKeys()
 
 	attrTypes := make(map[string]string, len(g))
 
 	for _, k := range attributeKeys {
-		name := FrameworkIdentifier(k)
+		name := FrameworkIdentifier(name + "_" + k)
 
 		if a, ok := g[k].(AttrType); ok {
 			attrType, err := a.AttrType(name)
@@ -83,7 +83,7 @@ func (g GeneratorAttributes) AttrTypes() (map[string]string, error) {
 		case GeneratorSetNestedAttribute:
 			attrTypes[k] = fmt.Sprintf("basetypes.SetType{\nElemType: %sValue{}.Type(ctx),\n}", name.ToPascalCase())
 		case GeneratorSingleNestedAttribute:
-			attrTypes[k] = fmt.Sprintf("basetypes.ObjectType{\nAttrTypes: %sValue{}.AttributeTypes(ctx),\n}", name.ToPascalCase())
+			attrTypes[k] = fmt.Sprintf("basetypes.ObjectType{\nAttrTypes: /*hello4: ok*/ %sValue{}.AttributeTypes(ctx),\n}", name.ToPascalCase())
 		}
 	}
 

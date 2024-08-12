@@ -71,7 +71,7 @@ func (c CustomTypeObject) Schema() []byte {
 	case c.customType != nil:
 		customType = c.customType.Type
 	case c.associatedExternalType != nil:
-		customType = fmt.Sprintf("%sType{\ntypes.ObjectType{\nAttrTypes: %sValue{}.AttributeTypes(ctx),\n},\n}", format.ToPascalCase(c.name), format.ToPascalCase(c.name))
+		customType = fmt.Sprintf("%sType{\ntypes.ObjectType{\nAttrTypes: /*hello2*/ %sValue{}.AttributeTypes(ctx),\n},\n}", format.ToPascalCase(c.name), format.ToPascalCase(c.name))
 	}
 
 	if customType != "" {

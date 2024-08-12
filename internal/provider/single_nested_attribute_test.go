@@ -20,7 +20,7 @@ import (
 func TestGeneratorSingleNestedAttribute_New(t *testing.T) {
 	t.Parallel()
 
-	attributes, err := NewAttributes(provider.Attributes{})
+	attributes, err := NewAttributes(name, provider.Attributes{})
 
 	if err != nil {
 		t.Error(err)

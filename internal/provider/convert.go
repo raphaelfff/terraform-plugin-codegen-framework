@@ -37,7 +37,7 @@ func NewSchema(p *provider.Provider) (generatorschema.GeneratorSchema, error) {
 	blocks := make(generatorschema.GeneratorBlocks, len(p.Schema.Blocks))
 
 	for _, v := range p.Schema.Attributes {
-		a, err := NewAttribute(v)
+		a, err := NewAttribute("", v)
 
 		if err != nil {
 			return s, err
@@ -69,11 +69,11 @@ func NewSchema(p *provider.Provider) (generatorschema.GeneratorSchema, error) {
 	return s, nil
 }
 
-func NewAttributes(a provider.Attributes) (generatorschema.GeneratorAttributes, error) {
+func NewAttributes(name string, a provider.Attributes) (generatorschema.GeneratorAttributes, error) {
 	attributes := make(generatorschema.GeneratorAttributes, len(a))
 
 	for _, v := range a {
-		attribute, err := NewAttribute(v)
+		attribute, err := NewAttribute(name, v)
 
 		if err != nil {
 			return generatorschema.GeneratorAttributes{}, err
@@ -85,34 +85,36 @@ func NewAttributes(a provider.Attributes) (generatorschema.GeneratorAttributes, 
 	return attributes, nil
 }
 
-func NewAttribute(a provider.Attribute) (generatorschema.GeneratorAttribute, error) {
+func NewAttribute(name string, a provider.Attribute) (generatorschema.GeneratorAttribute, error) {
+	name = name + "_" + a.Name
+
 	switch {
 	case a.Bool != nil:
-		return NewGeneratorBoolAttribute(a.Name, a.Bool)
+		return NewGeneratorBoolAttribute(name, a.Bool)
 	case a.Float64 != nil:
-		return NewGeneratorFloat64Attribute(a.Name, a.Float64)
+		return NewGeneratorFloat64Attribute(name, a.Float64)
 	case a.Int64 != nil:
-		return NewGeneratorInt64Attribute(a.Name, a.Int64)
+		return NewGeneratorInt64Attribute(name, a.Int64)
 	case a.List != nil:
-		return NewGeneratorListAttribute(a.Name, a.List)
+		return NewGeneratorListAttribute(name, a.List)
 	case a.ListNested != nil:
-		return NewGeneratorListNestedAttribute(a.Name, a.ListNested)
+		return NewGeneratorListNestedAttribute(name, a.ListNested)
 	case a.Map != nil:
-		return NewGeneratorMapAttribute(a.Name, a.Map)
+		return NewGeneratorMapAttribute(name, a.Map)
 	case a.MapNested != nil:
-		return NewGeneratorMapNestedAttribute(a.Name, a.MapNested)
+		return NewGeneratorMapNestedAttribute(name, a.MapNested)
 	case a.Number != nil:
-		return NewGeneratorNumberAttribute(a.Name, a.Number)
+		return NewGeneratorNumberAttribute(name, a.Number)
 	case a.Object != nil:
-		return NewGeneratorObjectAttribute(a.Name, a.Object)
+		return NewGeneratorObjectAttribute(name, a.Object)
 	case a.Set != nil:
-		return NewGeneratorSetAttribute(a.Name, a.Set)
+		return NewGeneratorSetAttribute(name, a.Set)
 	case a.SetNested != nil:
-		return NewGeneratorSetNestedAttribute(a.Name, a.SetNested)
+		return NewGeneratorSetNestedAttribute(name, a.SetNested)
 	case a.SingleNested != nil:
-		return NewGeneratorSingleNestedAttribute(a.Name, a.SingleNested)
+		return NewGeneratorSingleNestedAttribute(name, a.SingleNested)
 	case a.String != nil:
-		return NewGeneratorStringAttribute(a.Name, a.String)
+		return NewGeneratorStringAttribute(name, a.String)
 	}
 
 	return nil, fmt.Errorf("attribute type not defined: %+v", a)

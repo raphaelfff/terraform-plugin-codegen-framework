@@ -64,7 +64,7 @@ func (c CustomTypeNestedObject) Schema() []byte {
 	case c.customType != nil:
 		customTypeType = c.customType.Type
 	default:
-		customTypeType = fmt.Sprintf("%sType{\nObjectType: types.ObjectType{\nAttrTypes: %sValue{}.AttributeTypes(ctx),\n},\n}", format.ToPascalCase(c.name), format.ToPascalCase(c.name))
+		customTypeType = fmt.Sprintf("%sType{\nObjectType: /*hello1*/types.ObjectType{\nAttrTypes: %sValue{}.AttributeTypes(ctx),\n},\n}", format.ToPascalCase(c.name), format.ToPascalCase(c.name))
 	}
 
 	if customTypeType != "" {

@@ -88,7 +88,13 @@ func (identifier FrameworkIdentifier) ToPrefixPascalCase(prefix string) string {
 		}
 	}
 
-	return pascalCase
+	return FrameworkIdentifier(prefix).ToPascalCase() + pascalCase
+}
+
+func (identifier FrameworkIdentifier) ToPrefixPascalCase2(prefix string) string {
+	pascalCase := identifier.ToPascalCase()
+
+	return FrameworkIdentifier(prefix).ToPascalCase() + pascalCase
 }
 
 // ToString returns the FrameworkIdentifier as a string without any formatting.

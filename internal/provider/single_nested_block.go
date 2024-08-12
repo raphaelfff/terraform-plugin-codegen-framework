@@ -32,7 +32,7 @@ func NewGeneratorSingleNestedBlock(name string, b *provider.SingleNestedBlock) (
 		return GeneratorSingleNestedBlock{}, fmt.Errorf("*provider.SingleNestedBlock is nil")
 	}
 
-	attributes, err := NewAttributes(b.Attributes)
+	attributes, err := NewAttributes(name, b.Attributes)
 
 	if err != nil {
 		return GeneratorSingleNestedBlock{}, err
@@ -251,7 +251,7 @@ func (g GeneratorSingleNestedBlock) CustomTypeAndValue(name string) ([]byte, err
 		attributesBlocksTypes[k] = v
 	}
 
-	attributeAttrTypes, err := g.Attributes.AttrTypes()
+	attributeAttrTypes, err := g.Attributes.AttrTypes(name)
 
 	if err != nil {
 		return nil, err
@@ -298,7 +298,7 @@ func (g GeneratorSingleNestedBlock) CustomTypeAndValue(name string) ([]byte, err
 	// CustomTypeAndValue interface (i.e, nested attributes).
 	for _, k := range attributeKeys {
 		if c, ok := g.Attributes[k].(schema.CustomTypeAndValue); ok {
-			b, err := c.CustomTypeAndValue(k)
+			b, err := c.CustomTypeAndValue(name + "_" + k)
 
 			if err != nil {
 				return nil, err
@@ -310,7 +310,7 @@ func (g GeneratorSingleNestedBlock) CustomTypeAndValue(name string) ([]byte, err
 
 	for _, k := range blockKeys {
 		if c, ok := g.Blocks[k].(schema.CustomTypeAndValue); ok {
-			b, err := c.CustomTypeAndValue(k)
+			b, err := c.CustomTypeAndValue(name + "_" + k)
 
 			if err != nil {
 				return nil, err

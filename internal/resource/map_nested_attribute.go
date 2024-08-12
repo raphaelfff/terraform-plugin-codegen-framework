@@ -33,7 +33,7 @@ func NewGeneratorMapNestedAttribute(name string, a *resource.MapNestedAttribute)
 		return GeneratorMapNestedAttribute{}, fmt.Errorf("*resource.MapNestedAttribute is nil")
 	}
 
-	attributes, err := NewAttributes(a.NestedObject.Attributes)
+	attributes, err := NewAttributes(a.NestedObject.Attributes, name)
 
 	if err != nil {
 		return GeneratorMapNestedAttribute{}, err
@@ -219,7 +219,7 @@ func (g GeneratorMapNestedAttribute) CustomTypeAndValue(name string) ([]byte, er
 		return nil, err
 	}
 
-	attributeAttrTypes, err := g.NestedObject.Attributes.AttrTypes()
+	attributeAttrTypes, err := g.NestedObject.Attributes.AttrTypes(name)
 
 	if err != nil {
 		return nil, err
@@ -247,7 +247,7 @@ func (g GeneratorMapNestedAttribute) CustomTypeAndValue(name string) ([]byte, er
 	// CustomTypeAndValue interface (i.e, nested attributes).
 	for _, k := range attributeKeys {
 		if c, ok := g.NestedObject.Attributes[k].(schema.CustomTypeAndValue); ok {
-			b, err := c.CustomTypeAndValue(k)
+			b, err := c.CustomTypeAndValue(name + "_" + k)
 
 			if err != nil {
 				return nil, err

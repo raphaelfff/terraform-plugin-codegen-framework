@@ -257,7 +257,7 @@ func (g GeneratorObjectAttribute) ToFromFunctions(name string) ([]byte, error) {
 // AttrType returns a string representation of a basetypes.ObjectTypable type.
 func (g GeneratorObjectAttribute) AttrType(name generatorschema.FrameworkIdentifier) (string, error) {
 	if g.AssociatedExternalType != nil {
-		return fmt.Sprintf("%sType{\nbasetypes.ObjectType{\nAttrTypes: %sValue{}.AttributeTypes(ctx),\n}}", name.ToPascalCase(), name.ToPascalCase()), nil
+		return fmt.Sprintf("%sType{\nbasetypes.ObjectType{\nAttrTypes: /*hello3*/ %sValue{}.AttributeTypes(ctx),\n}}", name.ToPascalCase(), name.ToPascalCase()), nil
 	}
 
 	aTypes, err := generatorschema.AttrTypesString(g.AttrTypes())

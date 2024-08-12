@@ -15,7 +15,7 @@ return true
 }
 
 {{range $key, $value := .AttrValues }}
-if !v.{{$key.ToPrefixPascalCase $.Name}}.Equal(other.{{$key.ToPrefixPascalCase $.Name}}) {
+if !v.{{$key.ToPascalCase}}.Equal(other.{{$key.ToPascalCase}}) {
 return false
 }
 {{end}}

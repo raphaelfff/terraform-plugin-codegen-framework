@@ -195,7 +195,7 @@ func (g GeneratorSetNestedAttribute) CustomTypeAndValue(name string) ([]byte, er
 		return nil, err
 	}
 
-	attributeAttrTypes, err := g.NestedObject.Attributes.AttrTypes()
+	attributeAttrTypes, err := g.NestedObject.Attributes.AttrTypes(name)
 
 	if err != nil {
 		return nil, err
@@ -223,7 +223,7 @@ func (g GeneratorSetNestedAttribute) CustomTypeAndValue(name string) ([]byte, er
 	// CustomTypeAndValue interface (i.e, nested attributes).
 	for _, k := range attributeKeys {
 		if c, ok := g.NestedObject.Attributes[k].(schema.CustomTypeAndValue); ok {
-			b, err := c.CustomTypeAndValue(k)
+			b, err := c.CustomTypeAndValue(name + "_" + k)
 
 			if err != nil {
 				return nil, err
