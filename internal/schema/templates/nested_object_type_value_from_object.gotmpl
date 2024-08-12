@@ -33,7 +33,7 @@ return nil, diags
 
 return {{.Name}}Value{
 {{- range $key, $value := .AttrValues }}
-{{$key.ToPascalCase}}: {{$key.ToCamelCase}}Val,
+_{{$key.ToPascalCase}}: {{$key.ToCamelCase}}Val,
 {{- end}}
 state: attr.ValueStateKnown,
 }, diags
