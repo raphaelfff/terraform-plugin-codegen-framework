@@ -1,4 +1,4 @@
-module github.com/hashicorp/terraform-plugin-codegen-framework
+module github.com/raphaelfff/terraform-plugin-codegen-framework
 
 go 1.21
 
