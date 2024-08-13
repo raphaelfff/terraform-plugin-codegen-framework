@@ -1,6 +1,6 @@
 type {{.Name}}Value struct {
 {{- range $key, $value := .AttrValues }}
-_{{$key.ToPascalCase}} {{$value}} `tfsdk:"{{$key}}"`
+Attr{{$key.ToPascalCase}} {{$value}} `tfsdk:"{{$key}}"`
 {{- end}}
 state attr.ValueState
 }
